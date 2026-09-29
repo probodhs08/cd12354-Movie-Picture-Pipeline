@@ -87,6 +87,13 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
 
+      - name: Verify backend API URL
+        env:
+          REACT_APP_MOVIE_API_URL: ${{ vars.BACKEND_API_URL }}
+        run: |
+          echo "Backend API URL: $REACT_APP_MOVIE_API_URL"
+          curl -fsS "$REACT_APP_MOVIE_API_URL/movies/"
+          
       - name: Build Docker image
         working-directory: starter/frontend
         env:
